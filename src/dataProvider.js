@@ -1,13 +1,4 @@
-import {
-	GET_LIST,
-	GET_ONE,
-	GET_MANY,
-	GET_MANY_REFERENCE,
-	CREATE,
-	UPDATE,
-	DELETE,
-	fetchUtils
-} from 'react-admin';
+import { GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE, UPDATE, DELETE, fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
 
 const API_URL = 'https://api.festbot.com';
@@ -27,9 +18,7 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 				limit: perPage
 			};
 			return {
-				url: `${API_URL}/${resource}/_design/default/_view/admin?${stringify(
-					query
-				)}`
+				url: `${API_URL}/${resource}/_design/default/_view/admin?${stringify(query)}`
 			};
 		}
 		case GET_ONE:
@@ -54,9 +43,8 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 			return {
 				url: `${API_URL}/${resource}/${params.id}`,
 				options: {
-					headers: { 'If-Match': params._rev },
 					method: 'PUT',
-					body: JSON.stringify(params)
+					body: JSON.stringify({ ...params.data, id: undefined })
 				}
 			};
 		case CREATE:
@@ -82,12 +70,7 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
  * @param {Object} params The Data Provider request params, depending on the type
  * @returns {Object} Data Provider response
  */
-const convertHTTPResponseToDataProvider = (
-	response,
-	type,
-	resource,
-	params
-) => {
+const convertHTTPResponseToDataProvider = (response, type, resource, params) => {
 	const { json } = response;
 	switch (type) {
 		case GET_LIST:
@@ -110,12 +93,6 @@ const convertHTTPResponseToDataProvider = (
  */
 export default async (type, resource, params) => {
 	const { fetchJson } = fetchUtils;
-	const { url, options } = await convertDataProviderRequestToHTTP(
-		type,
-		resource,
-		params
-	);
-	return fetchJson(url, options).then(response =>
-		convertHTTPResponseToDataProvider(response, type, resource, params)
-	);
+	const { url, options } = await convertDataProviderRequestToHTTP(type, resource, params);
+	return fetchJson(url, options).then(response => convertHTTPResponseToDataProvider(response, type, resource, params));
 };

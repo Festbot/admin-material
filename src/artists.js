@@ -1,12 +1,7 @@
 import React from 'react';
-import {
-	List,
-	Datagrid,
-	TextField,
-	TextInput,
-	Create,
-	SimpleForm
-} from 'react-admin';
+import { List, Datagrid, TextField, TextInput, Create, SimpleForm, Edit, EditButton } from 'react-admin';
+
+const required = (message = 'Required') => value => (value ? undefined : message);
 
 export const ArtistList = props => (
 	<List title="All artists" {...props}>
@@ -15,6 +10,7 @@ export const ArtistList = props => (
 			<TextField source="country" />
 			<TextField source="website" />
 			<TextField source="popularity" />
+			<EditButton />
 		</Datagrid>
 	</List>
 );
@@ -22,7 +18,7 @@ export const ArtistList = props => (
 export const ArtistCreate = props => (
 	<Create {...props}>
 		<SimpleForm>
-			<TextInput source="name" />
+			<TextInput source="name" validate={required()} />
 			<TextInput source="country" />
 			<TextInput source="website" />
 			<TextInput source="facebook" />
@@ -30,4 +26,17 @@ export const ArtistCreate = props => (
 			<TextInput source="facebook" />
 		</SimpleForm>
 	</Create>
+);
+
+export const ArtistEdit = props => (
+	<Edit {...props}>
+		<SimpleForm>
+			<TextInput source="name" validate={required()} />
+			<TextInput source="country" />
+			<TextInput source="website" />
+			<TextInput source="facebook" />
+			<TextInput source="spotify" />
+			<TextInput source="facebook" />
+		</SimpleForm>
+	</Edit>
 );
