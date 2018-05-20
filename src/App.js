@@ -6,7 +6,7 @@ import dataProvider from './dataProvider';
 import PostIcon from '@material-ui/icons/Book';
 import UserIcon from '@material-ui/icons/Group';
 
-import { UserList } from './users';
+import { UserList, UserEdit, UserCreate } from './users';
 import { PostList, PostEdit, PostCreate } from './posts';
 import { ArtistList, ArtistCreate, ArtistEdit } from './artists';
 
@@ -14,7 +14,7 @@ import { ArtistList, ArtistCreate, ArtistEdit } from './artists';
 
 const App = () => (
 	<Admin dataProvider={dataProvider}>
-		<Resource name="users" list={UserList} icon={PostIcon} />
+		<Resource name="users" list={UserList} edit={UserEdit} create={UserCreate} icon={PostIcon} />
 		<Resource name="artists" list={ArtistList} create={ArtistCreate} edit={ArtistEdit} icon={PostIcon} />
 	</Admin>
 );

@@ -41,7 +41,7 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 		}
 		case UPDATE:
 			return {
-				url: `${API_URL}/${resource}/${params.id}`,
+				url: `${API_URL}/${resource}/${params.data._id}`,
 				options: {
 					method: 'PUT',
 					body: JSON.stringify({ ...params.data, id: undefined })
@@ -55,7 +55,7 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 			};
 		case DELETE:
 			return {
-				url: `${API_URL}/${resource}/${params._id}?rev=${params._rev}`,
+				url: `${API_URL}/${resource}/${params.previousData._id}?rev=${params.previousData._rev}`,
 				options: { method: 'DELETE' }
 			};
 		default:
