@@ -13,12 +13,15 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 	switch (type) {
 		case GET_LIST: {
 			const { page, perPage } = params.pagination;
+			const { field, order } = params.sort;
 			const query = {
 				skip: (page - 1) * perPage,
-				limit: perPage
+				limit: perPage,
+				descending: order === 'DESC'
 			};
+
 			return {
-				url: `${API_URL}/${resource}/_design/default/_view/admin?${stringify(query)}`
+				url: `${API_URL}/${resource}/_design/admin/_view/order-by-${field}?${stringify(query)}`
 			};
 		}
 		case GET_ONE:
