@@ -3,17 +3,16 @@ import { List, Datagrid, TextField, EditButton, TextInput, Edit, SimpleForm, Cre
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
-export const UserList = props => (
-	<List title="All users" {...props}>
+export const SandboxList = props => (
+	<List {...props}>
 		<Datagrid>
-			<TextField source="id" />
 			<TextField source="name" />
 			<EditButton />
 		</Datagrid>
 	</List>
 );
 
-export const UserCreate = props => (
+export const SandboxCreate = props => (
 	<Create {...props}>
 		<SimpleForm>
 			<TextInput source="name" validate={required()} />
@@ -21,7 +20,7 @@ export const UserCreate = props => (
 	</Create>
 );
 
-export const UserEdit = props => (
+export const SandboxEdit = props => (
 	<Edit {...props}>
 		<SimpleForm>
 			<TextInput source="name" validate={required()} />
