@@ -1,12 +1,13 @@
 import React from 'react';
 import { List, Datagrid, TextField,TextInput,Create, SimpleForm, Edit, EditButton } from 'react-admin';
+import IdImageField from '../customFields/IdImageField';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
 export const EventList = (props) => (
     <List title="All events" {...props}>
         <Datagrid>
-            <TextField source="_id" />
+            <IdImageField source="artist_id" baseUrl="https://chatbot.festbot.com/assets/img/artist/"/>
             <TextField source="artist" />
             <TextField source="place" />
             <TextField source="startDate" />
