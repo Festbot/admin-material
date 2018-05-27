@@ -1,5 +1,6 @@
 import React from 'react';
-import { List, Datagrid, TextField, TextInput, Create, SimpleForm, Edit, EditButton } from 'react-admin';
+import { List, Datagrid, TextField, BooleanField,BooleanInput,TextInput, Create, SimpleForm, Edit, EditButton } from 'react-admin';
+import TagList from '../customFields/TagList.jsx'
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -10,6 +11,11 @@ export const ArtistList = props => (
 			<TextField source="country" />
 			<TextField source="website" />
 			<TextField source="popularity" />
+		
+			<TagList source="genres" />
+			<BooleanField source="featured" />
+
+
 			<EditButton />
 		</Datagrid>
 	</List>
@@ -37,6 +43,7 @@ export const ArtistEdit = props => (
 			<TextInput source="facebook" />
 			<TextInput source="spotify" />
 			<TextInput source="facebook" />
+			<BooleanInput source="featured" />
 		</SimpleForm>
 	</Edit>
 );
