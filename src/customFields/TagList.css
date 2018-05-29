@@ -1,9 +1,9 @@
 .container {
-  background-color: #777;
-  margin: 2px;
-  padding: 3px;
-  border-radius: 2px;
-  color: white;
-  line-height: 130%;
-  display: inline-block;
+	background-color: #777;
+	margin: 2px;
+	padding: 3px;
+	border-radius: 2px;
+	color: white;
+	line-height: 130%;
+	display: inline-block;
 }

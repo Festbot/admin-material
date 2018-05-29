@@ -18,7 +18,6 @@ import { Field } from 'redux-form';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
-
 export const ArtistList = props => (
 	<List title="All artists" {...props}>
 		<Datagrid>
@@ -53,8 +52,8 @@ export const ArtistEdit = props => (
 	<Edit {...props}>
 		<SimpleForm>
 			<IdImageField source="_id" width="250px" baseUrl="https://chatbot.festbot.com/assets/img/artist/" />
-			
-			<Field name="imageData" source="imageData" component={ImageUpload}/>
+
+			<Field name="imageData" source="imageData" component={ImageUpload} />
 			<TextInput source="name" validate={required()} />
 			<TextInput source="country" />
 			<TextInput source="website" />

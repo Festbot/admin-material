@@ -9,7 +9,7 @@ import {
 	SimpleForm,
 	Create,
 	LongTextInput,
-  SelectInput
+	SelectInput
 } from 'react-admin';
 import TagList from '../customFields/TagList';
 import IdImageField from '../customFields/IdImageField';
@@ -268,8 +268,13 @@ const countries = [
 
 export const FestivalList = props => (
 	<List title="All Festivals" {...props}>
-    <Datagrid>
-      <IdImageField source="_id" width="100px" title="kep" baseUrl="https://chatbot.festbot.com/assets/img/venue/"/>
+		<Datagrid>
+			<IdImageField
+				source="_id"
+				width="100px"
+				title="kep"
+				baseUrl="https://chatbot.festbot.com/assets/img/venue/"
+			/>
 			<TextField source="name" />
 			<TagList source="dates" />
 			<TextField source="id" />
