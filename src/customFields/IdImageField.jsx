@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import classes from './IdImageField.css'
 
 
-const IdImageField = ({baseUrl,width, source,record={}}) => {
+const IdImageField = ({baseUrl,width, source,record}) => {
   return (
     <img src={baseUrl + record[source] + ".jpg"} style={{width: width}} />
   )
