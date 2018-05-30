@@ -1,7 +1,46 @@
 import { GET_LIST, GET_ONE, GET_MANY, GET_MANY_REFERENCE, CREATE, UPDATE, DELETE, fetchUtils } from 'react-admin';
 import { stringify } from 'query-string';
+import axios from 'axios';
+import { filter } from 'ramda';
 
 const API_URL = 'https://api.festbot.com';
+
+const isFile = field => field instanceof File;
+const isNotFile = field => {
+	return !isFile(field);
+};
+
+const getUUID = async function() {
+	const { json } = await fetchUtils.fetchJson(`${API_URL}/_uuids`);
+	return json.uuids[0];
+};
+
+const uploadToCDN = async function(file) {
+	const formData = new FormData();
+	formData.append('file', file);
+	formData.append('UPLOADCARE_PUB_KEY', 'f901eb6f977e50e57615');
+	formData.append('UPLOADCARE_STORE', '1');
+	const { data } = await axios.post('https://upload.uploadcare.com/base/?', formData, {
+		header: {
+			'Content-Type': 'multipart/form-data'
+		}
+	});
+
+	return data.file;
+};
+
+const uploadFilesToCDN = async function(data) {
+	const fileObjects = filter(isFile, data);
+	const keys = Object.keys(fileObjects);
+	const newData = {...data};
+
+	for (let i = 0; i < keys.length; i++) {
+		const key = keys[i];
+		newData[key] = await uploadToCDN(fileObjects[key]);
+	}
+
+	return newData;
+}
 
 /**
  * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
@@ -43,17 +82,22 @@ const convertDataProviderRequestToHTTP = async (type, resource, params) => {
 			return { url: `${API_URL}/${resource}?${stringify(query)}` };
 		}
 		case UPDATE:
+			const filteredData = {
+				...filter(isNotFile, params.data),
+				id: undefined
+			};
+
 			return {
-				url: `${API_URL}/${resource}/${params.data._id}`,
+				url: `${API_URL}/${resource}/${filteredData._id}`,
 				options: {
 					method: 'PUT',
-					body: JSON.stringify({ ...params.data, id: undefined })
+					body: JSON.stringify(filteredData)
 				}
 			};
 		case CREATE:
-			const { json } = await fetchUtils.fetchJson(`${API_URL}/_uuids`);
+			const uuid = await getUUID();
 			return {
-				url: `${API_URL}/${resource}/${json.uuids[0]}`,
+				url: `${API_URL}/${resource}/${uuid}`,
 				options: { method: 'PUT', body: JSON.stringify(params.data) }
 			};
 		case DELETE:
@@ -95,7 +139,14 @@ const convertHTTPResponseToDataProvider = (response, type, resource, params) => 
  * @returns {Promise} the Promise for response
  */
 export default async (type, resource, params) => {
+	if (params.data) {
+		params.data = await uploadFilesToCDN(params.data);
+	}
+
 	const { fetchJson } = fetchUtils;
 	const { url, options } = await convertDataProviderRequestToHTTP(type, resource, params);
-	return fetchJson(url, options).then(response => convertHTTPResponseToDataProvider(response, type, resource, params));
+
+	return fetchJson(url, options).then(response =>
+		convertHTTPResponseToDataProvider(response, type, resource, params)
+	);
 };

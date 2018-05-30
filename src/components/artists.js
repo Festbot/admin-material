@@ -13,15 +13,14 @@ import {
 } from 'react-admin';
 import TagList from '../customFields/TagList.jsx';
 import IdImageField from '../customFields/IdImageField';
-import ImageUpload from '../customFields/ImageUpload';
-import { Field } from 'redux-form';
+import FestbotImageInput from '../customFields/ImageUpload';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
 export const ArtistList = props => (
 	<List title="All artists" {...props}>
 		<Datagrid>
-			<IdImageField source="_id" baseUrl="https://chatbot.festbot.com/assets/img/artist/" />
+			<IdImageField source="artistPhoto" baseUrl="https://ucarecdn.com/" />
 			<TextField source="name" />
 			<TextField source="country" />
 			<TextField source="website" />
@@ -51,9 +50,8 @@ export const ArtistCreate = props => (
 export const ArtistEdit = props => (
 	<Edit {...props}>
 		<SimpleForm>
-			<IdImageField source="_id" width="250px" baseUrl="https://chatbot.festbot.com/assets/img/artist/" />
-
-			<Field name="imageData" source="imageData" component={ImageUpload} />
+			<IdImageField source="artistPhoto" style={{width: '250px'}} baseUrl="https://ucarecdn.com/" />
+			<FestbotImageInput source="artistPhoto" />
 			<TextInput source="name" validate={required()} />
 			<TextInput source="country" />
 			<TextInput source="website" />

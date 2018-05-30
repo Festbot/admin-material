@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-//import classes from './ImageUpload.css'
+import { Field } from 'redux-form';
 
-export class ImageUpload extends Component {
+class ImageUpload extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			imageSource: props.record[props.source]
+			imageSource: 'https://ucarecdn.com/' + props.record[props.source] + '/'
 		};
 	}
 
 	fileSelectedHandler = event => {
 		const file = event.target.files[0];
-		console.log(event.target);
-		console.log(file);
+
+		if (file instanceof File) {
+			this.props.input.onChange(file);
+			this.previewFile(file);
+		}
+
 		// if (file.size > 150000) {
 		//   console.log('max 150kb');
 		//   let message = message + 'Max size 150kb, ';
@@ -24,26 +28,21 @@ export class ImageUpload extends Component {
 		//   let message = message + 'Must be a .jpg image';
 		//   return;
 		// }
-		this.previewFile();
 	};
 
-	previewFile = () => {
+	previewFile = file => {
 		const preview = document.querySelector('img');
-		const file = document.querySelector('input[type=file]').files[0];
-		var reader = new FileReader();
+		const reader = new FileReader();
 
 		reader.addEventListener(
 			'load',
 			() => {
 				this.setState({ imageSource: reader.result });
-				this.props.input.onChange(this.state.imageSource);
 			},
 			false
 		);
 
-		if (file) {
-			reader.readAsDataURL(file);
-		}
+		reader.readAsDataURL(file);
 	};
 
 	render() {
@@ -64,4 +63,4 @@ ImageUpload.propTypes = {
 	source: PropTypes.string.isRequired
 };
 
-export default ImageUpload;
+export default props => <Field {...props} name={props.source} component={ImageUpload} />;

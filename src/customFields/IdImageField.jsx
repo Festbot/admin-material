@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import classes from './IdImageField.css';
+import styled from 'styled-components';
 
-const IdImageField = ({ baseUrl, width, source, record }) => {
-	return <img src={baseUrl + record[source] + '.jpg'} style={{ width: width }} />;
+const Image = styled.img`
+	width: 100%;
+`;
+
+const IdImageField = props => {
+	const { baseUrl, source, record } = props;
+	return <Image src={baseUrl + record[source] + '/'} {...props} />;
 };
 
 IdImageField.propTypes = {

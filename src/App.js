@@ -8,7 +8,7 @@ import UserIcon from '@material-ui/icons/Group';
 import { UserList, UserEdit, UserCreate } from './components/users';
 import { FestivalList, FestivalEdit, FestivalCreate } from './components/festivals';
 import { ArtistList, ArtistCreate, ArtistEdit } from './components/artists';
-import { EventList, EventCreate, EventEdit } from './components/events';
+import { EventList, EventCreate, EventEdit } from './components/Events';
 import { VenueList, VenueCreate, VenueEdit } from './components/venues';
 import { SandboxList, SandboxCreate, SandboxEdit } from './components/sandbox';
 
