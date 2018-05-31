@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Datagrid, TextField, TextInput, Create, SimpleForm, Edit, EditButton } from 'react-admin';
 import IdImageField from '../customFields/IdImageField';
+import ProgramUploader from '../customFields/ProgramUploader';
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -25,6 +26,7 @@ export const EventCreate = props => (
 			<TextInput source="place" validate={required()} />
 			<TextInput source="startDate" validate={required()} />
 			<TextInput source="endDate" validate={required()} />
+			<ProgramUploader/>
 		</SimpleForm>
 	</Create>
 );

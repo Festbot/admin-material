@@ -14,6 +14,8 @@ import {
 import TagList from '../customFields/TagList';
 import IdImageField from '../customFields/IdImageField';
 
+
+
 const required = (message = 'Required') => value => (value ? undefined : message);
 const tagFormatter = v => {
 	if (!v) return;
@@ -328,7 +330,8 @@ export const FestivalEdit = props => (
 				validate={required()}
 			/>
 			<LongTextInput source="description" />
-			<TextInput source="website" />
+      <TextInput source="website" />
+      
 		</SimpleForm>
 	</Edit>
 );

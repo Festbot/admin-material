@@ -20,7 +20,7 @@ const required = (message = 'Required') => value => (value ? undefined : message
 export const ArtistList = props => (
 	<List title="All artists" {...props}>
 		<Datagrid>
-			<IdImageField source="artistPhoto" baseUrl="https://ucarecdn.com/" />
+			<IdImageField source="artistPhoto" style={{width: '100px'}} baseUrl="https://ucarecdn.com/" />
 			<TextField source="name" />
 			<TextField source="country" />
 			<TextField source="website" />

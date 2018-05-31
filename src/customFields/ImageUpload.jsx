@@ -4,7 +4,8 @@ import { Field } from 'redux-form';
 
 class ImageUpload extends Component {
 	constructor(props) {
-		super(props);
+    super(props);
+    this.previewImage = React.createRef();
 		this.state = {
 			imageSource: 'https://ucarecdn.com/' + props.record[props.source] + '/'
 		};
@@ -18,20 +19,10 @@ class ImageUpload extends Component {
 			this.previewFile(file);
 		}
 
-		// if (file.size > 150000) {
-		//   console.log('max 150kb');
-		//   let message = message + 'Max size 150kb, ';
-		//   return;
-		// }
-		// if (file.type !== 'image/jpeg') {
-		//   console.log('Must be a .jpg');
-		//   let message = message + 'Must be a .jpg image';
-		//   return;
-		// }
+
 	};
 
 	previewFile = file => {
-		const preview = document.querySelector('img');
 		const reader = new FileReader();
 
 		reader.addEventListener(
@@ -50,7 +41,7 @@ class ImageUpload extends Component {
 
 		return (
 			<div>
-				<img src={this.state.imageSource} />
+				<img src={this.state.imageSource} ref={this.previewImage}/>
 				<input type="file" onChange={this.fileSelectedHandler} />
 			</div>
 		);
