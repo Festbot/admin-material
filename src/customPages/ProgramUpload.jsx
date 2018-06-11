@@ -7,8 +7,18 @@ import ProgramUploader from '../customFields/ProgramUploader';
 const ProgramUpload = () => (
 	<Card>
 		<ViewTitle title="Program Upload" />
-		<CardContent>
-			<SimpleForm>
+    <CardContent>
+    <h2>Choose or create a new Venue</h2>
+      <SimpleForm>
+      {/* 
+        
+        Kell egy fesztival valaszto dropdown, ami listazza a Userhez tartozo fesztivalokat.
+
+        vagy
+
+        Kerjuk be az alap adatokat egy uj Fesztival letrehozasahoz 
+      
+      */}
 				<ProgramUploader />
 			</SimpleForm>
 		</CardContent>
