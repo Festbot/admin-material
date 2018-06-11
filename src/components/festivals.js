@@ -17,10 +17,7 @@ import IdImageField from '../customFields/IdImageField';
 
 
 const required = (message = 'Required') => value => (value ? undefined : message);
-const tagFormatter = v => {
-	if (!v) return;
-	return v.join(' ');
-};
+
 
 const countries = [
 	{ value: 'AF', label: 'Afghanistan' },
@@ -299,7 +296,7 @@ export const FestivalCreate = props => (
 			<TextInput source="location.address" label="Address" validate={required()} />
 			<LongTextInput
 				source="dates"
-				format={tagFormatter}
+				format={(v=[]) => v.join(' ')}
 				parse={v => v.split(' ')}
 				label="Dates (2018-08-17 2018-08-18 2018-08-20)"
 				validate={required()}
@@ -324,7 +321,7 @@ export const FestivalEdit = props => (
 			<TextInput source="location.address" label="Address" validate={required()} />
 			<LongTextInput
 				source="dates"
-				format={tagFormatter}
+				format={(v=[]) => v.join(' ')}
 				parse={v => v.split(' ')}
 				label="Dates (2018-08-17 2018-08-18 2018-08-20)"
 				validate={required()}

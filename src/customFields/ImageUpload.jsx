@@ -37,11 +37,10 @@ class ImageUpload extends Component {
 	};
 
 	render() {
-		const { baseUrl, width, record, source } = this.props;
 
 		return (
 			<div>
-				<img src={this.state.imageSource} ref={this.previewImage}/>
+				<img src={this.state.imageSource} style={{width: "180px"}} ref={this.previewImage}/>
 				<input type="file" onChange={this.fileSelectedHandler} />
 			</div>
 		);

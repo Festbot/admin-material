@@ -9,11 +9,16 @@ import {
 	Create,
 	SimpleForm,
 	Edit,
-	EditButton
+	EditButton,
+	FormDataConsumer,
+	LongTextInput
 } from 'react-admin';
 import TagList from '../customFields/TagList.jsx';
 import IdImageField from '../customFields/IdImageField';
 import FestbotImageInput from '../customFields/ImageUpload';
+import Slug from '../customFields/Slug'
+import HasPhotoField from '../customFields/HasPhotoField'
+
 
 const required = (message = 'Required') => value => (value ? undefined : message);
 
@@ -34,30 +39,52 @@ export const ArtistList = props => (
 	</List>
 );
 
-export const ArtistCreate = props => (
+export const ArtistCreate = props => {
+	console.log("render")
+	return (
 	<Create {...props}>
-		<SimpleForm>
-			<TextInput source="name" validate={required()} />
-			<TextInput source="country" />
-			<TextInput source="website" />
-			<TextInput source="facebook" />
-			<TextInput source="spotify" />
-			<TextInput source="facebook" />
-		</SimpleForm>
-	</Create>
-);
+	<SimpleForm>
+		<FestbotImageInput source="artistPhoto" />
+		<HasPhotoField source="artistPhoto" destination="hasPhoto" />
+		<TextInput source="name" validate={required()} />
+		<Slug source="name" destination="slug"/>
+		<TextInput source="country" />
+		<TextInput source="website" />
+		<TextInput source="facebook" />
+		<TextInput source="spotify" />
+		<LongTextInput
+		source="genres"
+		parse={v => v.split(',')}
+		label="Genres (Pop,Rock,Indie,Electonica)"
+		defaultValue={["uncategorised"]}
+		
+	/>
+		<BooleanInput source="featured" />
+	</SimpleForm>
+</Create>
+)
+}
+
+
 
 export const ArtistEdit = props => (
 	<Edit {...props}>
 		<SimpleForm>
-			<IdImageField source="artistPhoto" style={{width: '250px'}} baseUrl="https://ucarecdn.com/" />
+			
 			<FestbotImageInput source="artistPhoto" />
+			<HasPhotoField source="artistPhoto" destination="hasPhoto" />
 			<TextInput source="name" validate={required()} />
+			<Slug source="name" destination="slug"/>
 			<TextInput source="country" />
 			<TextInput source="website" />
 			<TextInput source="facebook" />
 			<TextInput source="spotify" />
-			<TextInput source="facebook" />
+			<LongTextInput
+			source="genres"
+			format={(v=[]) => v.join(',')}
+			parse={v => v.split(',')}
+			label="Genres (Pop,Rock,Indie,Electonica)"
+		/>
 			<BooleanInput source="featured" />
 		</SimpleForm>
 	</Edit>
